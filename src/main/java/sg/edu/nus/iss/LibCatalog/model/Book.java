@@ -51,6 +51,12 @@ public class Book implements Serializable {
         this.id = generate(8);
     }
 
+    /*
+     * synchronous methods allow for the method to be called by multiple users
+     * concurrently without creating a race condition. It creates a queue of method
+     * calls, requests served one by one.
+     */
+
     private synchronized String generate(int numChars) {
         Random r = new Random();
         StringBuilder stringBuilder = new StringBuilder();
