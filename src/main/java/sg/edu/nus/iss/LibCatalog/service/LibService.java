@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.LibCatalog.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,24 @@ public class LibService {
     }
 
     public List<Book> sortByAuthor(String author, boolean forward) {
-        List<Book> result = new ArrayList<Book>();
+        // TODO
+        List<Book> result = libRepo.getAllBooks();
+        if (forward) {
+            Collections.sort(result, new AuthorComparator());
+        } else {
+            Collections.sort(result, new AuthorComparator().reversed());
+        }
         return result;
     }
 
     public List<Book> sortByTitle(String title, boolean forward) {
+        // TODO
         List<Book> result = new ArrayList<Book>();
+        if (forward) {
+            Collections.sort(result, new TitleComparator());
+        } else {
+            Collections.sort(result, new TitleComparator().reversed());
+        }
         return result;
     }
 }
