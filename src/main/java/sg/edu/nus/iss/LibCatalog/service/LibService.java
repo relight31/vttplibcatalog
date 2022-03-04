@@ -19,7 +19,7 @@ public class LibService {
     }
 
     public List<Book> findByAuthor(String author) {
-        List<Book> result = new ArrayList<Book>();
+        List<Book> result = libRepo.getAllBooks();
         return result;
     }
 
