@@ -7,6 +7,15 @@ public class Book implements Serializable {
     private String id;
     private String author;
     private String title;
+    private String thumbnailUrl;
+
+    public String getThumbnailUrl() {
+        return this.thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
 
     public String getId() {
         return this.id;
