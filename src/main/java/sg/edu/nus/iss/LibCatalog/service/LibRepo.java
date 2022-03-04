@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.LibCatalog.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,15 +21,19 @@ public class LibRepo {
     RedisTemplate<String, Object> redisTemplate;
 
     public Book findById(String bookId) {
-        Book result = (Book) redisTemplate.opsForHash().get(bookMap, bookId);
+        Book book = (Book) redisTemplate.opsForHash().get(bookMap, bookId);
         logger.log(Level.INFO, "Successfully retrieved book: " + bookId);
-        return result;
+        return book;
     }
 
-    /*
-     * TODO
-     * public List<Book> getAllBooks(int startIndex, int numPages){
-     * 
-     * }
-     */
+    public List<Book> getAllBooks() {
+        List<Book> books = (List<Book>) redisTemplate.opsForHash()
+                .values("*")
+                .stream() // stack of stream-filter-map does marshalling of data stream into objects
+                .filter(Book.class::isInstance)
+                .map(Book.class::cast)
+                .toList();
+        return books;
+    }
+
 }
