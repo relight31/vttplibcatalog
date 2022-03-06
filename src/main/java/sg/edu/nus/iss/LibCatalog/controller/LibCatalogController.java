@@ -24,6 +24,8 @@ public class LibCatalogController {
     public String indexPage(Model model) {
         logger.log(Level.INFO, "Show landing page");
         model.addAttribute("helloWorld", "Hello World");
-        return "index";
+        return "search";
     }
+
+    // http://localhost:8080/searchTitle?searchTerm=&searchType=author&sortType=forward
 }
