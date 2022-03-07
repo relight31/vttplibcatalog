@@ -5,9 +5,9 @@ import java.util.Random;
 
 public class Book implements Serializable {
     private String id;
-    private String author;
-    private String title;
-    private String thumbnailUrl;
+    private String author = "Sample Author";
+    private String title = "Sample Title";
+    private String thumbnailUrl = "/thumbnails/no_book_cover.jpg";
 
     public String getThumbnailUrl() {
         return this.thumbnailUrl;
@@ -45,6 +45,13 @@ public class Book implements Serializable {
         this.id = generate(8);
         this.author = author;
         this.title = title;
+    }
+
+    public Book(String author, String title, String thumbnailUrl) {
+        this.id = generate(8);
+        this.author = author;
+        this.title = title;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public Book() {

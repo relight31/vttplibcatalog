@@ -35,12 +35,20 @@ public class LibCatalogController {
     public String indexPage(Model model) {
         logger.log(Level.INFO, "Show landing page");
         model.addAttribute("helloWorld", "Hello World");
+        model.addAttribute("imgLink", "library.png");
         return "search";
+    }
+
+    @GetMapping("/load")
+    public String loadDB(Model model) {
+        int booklistLength = service.loadBooks();
+        model.addAttribute("booklistLength", booklistLength);
+        return "loaded";
     }
 
     // http://localhost:8080/searchTitle?searchTerm=&searchType=author&sortType=forward
 
-    @GetMapping("/search")
+    @GetMapping("/search") // TODO throwing 404 error
     public String searchResults(Model model, @RequestParam String searchTerm, @RequestParam String searchType,
             @RequestParam String sortType) {
         List<Book> result = new ArrayList<Book>();

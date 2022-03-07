@@ -20,6 +20,13 @@ public class LibRepo {
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
 
+    public void saveBooks(List<Book> bookList) {
+        for (Book book : bookList) {
+            redisTemplate.opsForHash().put(bookMap, book.getId(), book);
+        }
+        logger.log(Level.INFO, "Successfully loaded " + bookList.size() + " book records");
+    }
+
     public Book findById(String bookId) {
         Book book = (Book) redisTemplate.opsForHash().get(bookMap, bookId);
         logger.log(Level.INFO, "Successfully retrieved book: " + bookId);
@@ -33,6 +40,7 @@ public class LibRepo {
                 .filter(Book.class::isInstance)
                 .map(Book.class::cast)
                 .toList();
+        logger.log(Level.INFO, "Successfully retrieved all books");
         return books;
     }
 
