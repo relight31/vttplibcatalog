@@ -48,19 +48,20 @@ public class LibCatalogController {
 
     // http://localhost:8080/searchTitle?searchTerm=&searchType=author&sortType=forward
 
-    @GetMapping("/search") // TODO throwing 404 error
+    @GetMapping("/search")
     public String searchResults(Model model, @RequestParam String searchTerm, @RequestParam String searchType,
             @RequestParam String sortType) {
         List<Book> result = new ArrayList<Book>();
-
+        logger.log(Level.INFO, "result list instantiated");
         if (searchType.equals("author")) {
+            logger.log(Level.INFO, "able to parse search type");
             result = service
                     .sortByAuthor(searchTerm, sortType.equals("forward"));
         } else {
             result = service
                     .sortByTitle(searchTerm, sortType.equals("forward"));
         }
-
+        logger.log(Level.INFO, "resul list populated");
         model.addAttribute("books", result);
         return "searchResults";
     }

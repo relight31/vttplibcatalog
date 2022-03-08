@@ -23,7 +23,7 @@ public class LibService {
     }
 
     public List<Book> findByAuthor(String author) {
-        List<Book> result = new ArrayList<Book>();
+        List<Book> result = libRepo.getAllBooks();
         result = result.stream()
                 .filter(book -> book.getAuthor().contains(author))
                 .toList();
@@ -31,7 +31,7 @@ public class LibService {
     }
 
     public List<Book> findByTitle(String title) {
-        List<Book> result = new ArrayList<Book>();
+        List<Book> result = libRepo.getAllBooks();
         result = result.stream()
                 .filter(book -> book.getTitle().contains(title))
                 .toList();
@@ -39,8 +39,11 @@ public class LibService {
     }
 
     public List<Book> sortByAuthor(String author, boolean forward) {
+        logger.log(Level.INFO, "able to call method");
         List<Book> result = findByAuthor(author);
+        logger.log(Level.INFO, "able to retrieve unsorted list");
         if (forward) {
+            // TODO fix sort method
             Collections.sort(result, new AuthorComparator());
         } else {
             Collections.sort(result, new AuthorComparator().reversed());
