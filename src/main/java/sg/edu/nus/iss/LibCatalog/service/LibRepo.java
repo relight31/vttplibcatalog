@@ -40,7 +40,7 @@ public class LibRepo {
                 .filter(Book.class::isInstance)
                 .map(Book.class::cast)
                 .toList();
-        logger.log(Level.INFO, "Successfully retrieved " + books.size() + " books");
+        logger.log(Level.INFO, "Successfully retrieved " + books.size() + " books as List");
         return books;
     }
 

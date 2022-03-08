@@ -40,19 +40,18 @@ public class LibService {
 
     public List<Book> sortByAuthor(String author, boolean forward) {
         logger.log(Level.INFO, "able to call method");
-        List<Book> result = findByAuthor(author);
+        ArrayList<Book> result = new ArrayList<Book>(findByAuthor(author));
         logger.log(Level.INFO, "able to retrieve unsorted list");
-/*         if (forward) {
-            // TODO fix sort method
+        if (forward) {
             Collections.sort(result, new AuthorComparator());
         } else {
             Collections.sort(result, new AuthorComparator().reversed());
-        } */
+        }
         return result;
     }
 
     public List<Book> sortByTitle(String title, boolean forward) {
-        List<Book> result = findByTitle(title);
+        ArrayList<Book> result = new ArrayList<Book>(findByTitle(title));
         if (forward) {
             Collections.sort(result, new TitleComparator());
         } else {

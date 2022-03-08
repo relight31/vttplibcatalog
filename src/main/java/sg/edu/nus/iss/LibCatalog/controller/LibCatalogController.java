@@ -24,9 +24,9 @@ public class LibCatalogController {
     /*
      * TODO
      * functionalies:
-     * query search title and author
+     * query search title and author - DONE
      * directory of books getAll
-     * sort by title or author
+     * sort by title or author - DONE
      * pagination
      * change num of books in a search
      */
