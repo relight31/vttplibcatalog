@@ -17,7 +17,7 @@ public class LibService {
     @Autowired
     LibRepo libRepo;
 
-    public Book findById(String bookId) {
+    public Book findById(String bookId) { // working
         logger.log(Level.INFO, "Calling libRepo.findById(" + bookId + ")");
         return libRepo.findById(bookId);
     }
@@ -42,12 +42,12 @@ public class LibService {
         logger.log(Level.INFO, "able to call method");
         List<Book> result = findByAuthor(author);
         logger.log(Level.INFO, "able to retrieve unsorted list");
-        if (forward) {
+/*         if (forward) {
             // TODO fix sort method
             Collections.sort(result, new AuthorComparator());
         } else {
             Collections.sort(result, new AuthorComparator().reversed());
-        }
+        } */
         return result;
     }
 

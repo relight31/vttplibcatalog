@@ -51,6 +51,7 @@ public class LibCatalogController {
     @GetMapping("/search")
     public String searchResults(Model model, @RequestParam String searchTerm, @RequestParam String searchType,
             @RequestParam String sortType) {
+        logger.log(Level.INFO, searchTerm + searchType + sortType);
         List<Book> result = new ArrayList<Book>();
         logger.log(Level.INFO, "result list instantiated");
         if (searchType.equals("author")) {
@@ -61,8 +62,18 @@ public class LibCatalogController {
             result = service
                     .sortByTitle(searchTerm, sortType.equals("forward"));
         }
-        logger.log(Level.INFO, "resul list populated");
+        logger.log(Level.INFO, "result list populated with " + result.size() + " records");
+        for (Book book : result) {
+            logger.log(Level.INFO, book.getAuthor());
+        }
         model.addAttribute("books", result);
         return "searchResults";
+    }
+
+    @GetMapping("/findById")
+    public String findById(Model model, @RequestParam String bookId) {
+        Book result = service.findById(bookId);
+        model.addAttribute("book", result);
+        return "findById";
     }
 }

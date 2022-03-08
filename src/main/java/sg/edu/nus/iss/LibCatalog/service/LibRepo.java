@@ -35,12 +35,12 @@ public class LibRepo {
 
     public List<Book> getAllBooks() {
         List<Book> books = (List<Book>) redisTemplate.opsForHash()
-                .values("*")
+                .values(bookMap)
                 .stream() // stack of stream-filter-map does marshalling of data stream into objects
                 .filter(Book.class::isInstance)
                 .map(Book.class::cast)
                 .toList();
-        logger.log(Level.INFO, "Successfully retrieved all books");
+        logger.log(Level.INFO, "Successfully retrieved " + books.size() + " books");
         return books;
     }
 

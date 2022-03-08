@@ -12,6 +12,7 @@
         <tr data-th-each="book : ${books}">
             <td data-th-text="${book.author}"></td>
             <td data-th-text="${book.title}"></td>
+            <img th:src="${book.thumbnailUrl}" alt="${book.title}">
         </tr>
     </table>
 </body>
