@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import sg.edu.nus.iss.LibCatalog.model.Book;
 
 // run all business logic here
+// Services are singletons, shared by controllers
 @Service
 public class LibService {
     Logger logger = Logger.getLogger(LibService.class.getName());
@@ -46,7 +47,7 @@ public class LibService {
 
     public List<Book> sortByAuthor(String author, boolean forward) {
         logger.log(Level.INFO, "Called sortByAuthor method");
-        ArrayList<Book> result = new ArrayList<Book>(findByAuthor(author));
+        List<Book> result = new ArrayList<Book>(findByAuthor(author));
         logger.log(Level.INFO, "Unsorted list retrieved");
         if (forward) {
             Collections.sort(result, new AuthorComparator());
@@ -58,7 +59,7 @@ public class LibService {
 
     public List<Book> sortByTitle(String title, boolean forward) {
         logger.log(Level.INFO, "Called sortByTitle method");
-        ArrayList<Book> result = new ArrayList<Book>(findByTitle(title));
+        List<Book> result = new ArrayList<Book>(findByTitle(title));
         logger.log(Level.INFO, "Unsorted list retrieved");
         if (forward) {
             Collections.sort(result, new TitleComparator());
