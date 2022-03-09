@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import sg.edu.nus.iss.LibCatalog.model.Book;
 import sg.edu.nus.iss.LibCatalog.service.LibService;
 
+// @RequestMapping("/resourceName")
 @Controller
 public class LibCatalogController {
     private Logger logger = Logger.getLogger(LibCatalogController.class.getName());
@@ -46,7 +47,11 @@ public class LibCatalogController {
         return "loaded";
     }
 
-    // http://localhost:8080/searchTitle?searchTerm=&searchType=author&sortType=forward
+    // http://localhost:8080/search?searchTerm=&searchType=author&sortType=forward
+    /*
+     * @RequestParam(required=false, defaultValue="abc", name="searchTerm") String
+     * searchTerm
+     */
 
     @GetMapping("/search")
     public String searchResults(Model model, @RequestParam String searchTerm, @RequestParam String searchType,
@@ -63,8 +68,8 @@ public class LibCatalogController {
                     .sortByTitle(searchTerm, sortType.equals("forward"));
         }
         logger.log(Level.INFO, "result list populated with " + result.size() + " records");
-        for (Book book : result) {
-            logger.log(Level.INFO, book.getAuthor());
+        if (result.size() == 0) {
+            result.add(new Book("No author found", "No title found"));
         }
         model.addAttribute("books", result);
         return "searchResults";

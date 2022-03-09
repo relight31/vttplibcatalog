@@ -24,24 +24,30 @@ public class LibService {
 
     public List<Book> findByAuthor(String author) {
         List<Book> result = libRepo.getAllBooks();
-        result = result.stream()
-                .filter(book -> book.getAuthor().contains(author))
-                .toList();
+        if (author.length() > 0) {
+            result = result.stream()
+                    .filter(book -> book.getAuthor().contains(author))
+                    .toList();
+        }
+
         return result;
     }
 
     public List<Book> findByTitle(String title) {
         List<Book> result = libRepo.getAllBooks();
-        result = result.stream()
-                .filter(book -> book.getTitle().contains(title))
-                .toList();
+        if (title.length() > 0) {
+            result = result.stream()
+                    .filter(book -> book.getTitle().contains(title))
+                    .toList();
+        }
+
         return result;
     }
 
     public List<Book> sortByAuthor(String author, boolean forward) {
-        logger.log(Level.INFO, "able to call method");
+        logger.log(Level.INFO, "Called sortByAuthor method");
         ArrayList<Book> result = new ArrayList<Book>(findByAuthor(author));
-        logger.log(Level.INFO, "able to retrieve unsorted list");
+        logger.log(Level.INFO, "Unsorted list retrieved");
         if (forward) {
             Collections.sort(result, new AuthorComparator());
         } else {
@@ -51,7 +57,9 @@ public class LibService {
     }
 
     public List<Book> sortByTitle(String title, boolean forward) {
+        logger.log(Level.INFO, "Called sortByTitle method");
         ArrayList<Book> result = new ArrayList<Book>(findByTitle(title));
+        logger.log(Level.INFO, "Unsorted list retrieved");
         if (forward) {
             Collections.sort(result, new TitleComparator());
         } else {
