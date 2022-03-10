@@ -19,19 +19,26 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
     private Logger logger = Logger.getLogger(RedisConfig.class.getName());
+
     @Value("${spring.redis.host}")
     private String redisHost;
 
     @Value("${spring.redis.port}")
     private Optional<Integer> redisPort;
 
+    @Value("${spring.redis.password}")
+    private String redisPassword;
+
     @Bean
     @Scope("singleton")
     public RedisTemplate<String, Object> redisTemplate() {
+        logger.log(Level.INFO, "Creating new config");
         final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
 
+        logger.log(Level.INFO, "Host: " + redisHost + " Port: " + redisPort);
         config.setHostName(redisHost);
         config.setPort(redisPort.get());
+        config.setPassword(redisPassword);
         logger.log(Level.INFO, "Successfully set Host " + redisHost + " and Port: " + redisPort);
 
         final JedisClientConfiguration jedisClient = JedisClientConfiguration.builder().build();

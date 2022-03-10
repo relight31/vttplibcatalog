@@ -24,6 +24,7 @@ public class LibService {
     }
 
     public List<Book> findByAuthor(String author) {
+        logger.log(Level.INFO, "Calling findByAuthor method");
         List<Book> result = libRepo.getAllBooks();
         if (author.length() > 0) {
             result = result.stream()

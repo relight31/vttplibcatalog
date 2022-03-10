@@ -34,6 +34,7 @@ public class LibRepo {
     }
 
     public List<Book> getAllBooks() {
+        logger.log(Level.INFO, "Calling getAllBooks method");
         List<Book> books = (List<Book>) redisTemplate.opsForHash()
                 .values(bookMap)
                 .stream() // stack of stream-filter-map does marshalling of data stream into objects
