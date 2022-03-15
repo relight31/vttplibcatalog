@@ -26,29 +26,38 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private Optional<Integer> redisPort;
 
-    @Value("${spring.redis.password}")
-    private String redisPassword;
+    // @Value("${spring.redis.password}")
+    // private String redisPassword;
 
-    @Bean
+    @Bean(name = "library") // Beans have no constructors with parameters
+    // @Bean (put name only if necessary, name is hazardous if typo)
     @Scope("singleton")
     public RedisTemplate<String, Object> redisTemplate() {
+        // this a factory method, produces an object to be injected
+        // RedisConfiguration talks to Jedis driver which talks to Redis
         logger.log(Level.INFO, "Creating new config");
         final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
 
         logger.log(Level.INFO, "Host: " + redisHost + " Port: " + redisPort);
         config.setHostName(redisHost);
         config.setPort(redisPort.get());
-        config.setPassword(redisPassword);
+        // config.setPassword(redisPassword);
         logger.log(Level.INFO, "Successfully set Host " + redisHost + " and Port: " + redisPort);
 
+        // config and connect config to Jedis driver
         final JedisClientConfiguration jedisClient = JedisClientConfiguration.builder().build();
         final JedisConnectionFactory jedisFac = new JedisConnectionFactory(config, jedisClient);
         jedisFac.afterPropertiesSet();
 
+        // allow app to communicate with RedisTemplate
         RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
         template.setConnectionFactory(jedisFac);
+
+        // convert Strings to UTF-8
         template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(new StringRedisSerializer());
 
         RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer(getClass().getClassLoader());
 

@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ public class LibRepo {
     private static final String bookMap = "bookMap";
 
     @Autowired
+    @Qualifier("library") // to use named bean, don't use unless necessary
     RedisTemplate<String, Object> redisTemplate;
 
     public void saveBooks(List<Book> bookList) {
